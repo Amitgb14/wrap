@@ -1,0 +1,38 @@
+  
+{% block content %}
+{% include 'header.html' %}
+    <div id="wrapper">
+        <div class="container">
+          <!-- Main component for a primary marketing message or call to action -->
+          <!-- Page Heading -->
+          <div class="container-fluid">
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-10 col-md-6">
+                     <ol class="breadcrumb">
+                          <li><a href="/products/">Products</a></li>
+                          <li><a href="/products/add_products/">Add Products</a></li>
+                     </ol>
+                  </div>
+              </div>
+
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="list-group">
+                            {% for certificate in certificates %}
+                            <a href="add_ssl_certificates/{{ certificate.id }}/" class="list-group-item">
+                                <span class="badge glyphicon glyphicon-plus"> </span>
+                                {{ certificate }}
+                            </a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+          </div>
+        </div> <!-- /container -->
+      </div>
+{% include 'footer.html' %}
+{% endblock content %}
+

@@ -1,0 +1,116 @@
+  
+{% block content %}
+{% include 'header.html' %}
+{% load crispy_forms_tags %}
+
+        <div class="container">
+          <!-- Main component for a primary marketing message or call to action -->
+          <!-- Page Heading -->
+          <div class="container-fluid">
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-10 col-md-6">
+                     <ol class="breadcrumb">
+                          <li><a href="/services/">Services</a></li>
+                          <li><a href="/services/add_services/">Add Serevices</a></li>
+                          <li>New SSL Certificates</li>
+                     </ol>
+                  </div>
+              </div>
+
+                          <!-- /.row -->
+                
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-md-offset-2">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary" id="choose_p_button">Choose</button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="add_csr_button">Add CSR</button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="verification_button">Verification</button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="success_button">Success</button>
+                          </div>
+                      </div>
+                    </div>
+                </div><br>
+                
+                <div class="row">
+                    <div class="col-lg-6 col-md-3 col-md-offset-2" id="choose_p">
+                      
+                      <ul class="list-group">
+                        
+                        {% for period in form.period %} 
+                            <li class="list-group-item">
+                                <div class="radio radio-primary">
+                                    {{ period.tag }}
+                                    <label for="value_{{ forloop.counter }}">{{ period.choice_label }}</label>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                      </ul>
+                        <center>
+                          <button type="submit" class="btn btn-primary btn-lg" id="choose_p_click">Next</button>
+                        </center>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-lg-4 col-md-3 col-md-offset-3" id="add_csr">
+                        <center>
+                          <button type="button" class="btn btn-success btn-block btn-lg"  data-toggle="modal" data-target="#myModal">
+                              I have already CSR
+                          </button>
+                          <h4>--OR--</h4>
+                          <button type="button" class="btn btn-success btn-block btn-lg">Steps To Create CSR</button>
+                        </center>
+                        <!-- Modal -->
+                          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">Certificate Singing Request(CSR)</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="form-group"><center>
+                                    <div class="input-group">
+                                      {{ form.csr_text }}
+                                    </div></center>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="cancle" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary" id="submit_csr">Add</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-3 col-md-offset-2" id="verification">
+                      <div class="list-group">
+                            <li class="list-group-item">
+                                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate pull-right"> </span>
+                                Domain Verification
+                                <small>&nbsp;www.wrap.com</small>
+                            </li>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            It takes 4-5 min for verification, We will send you mail for verification.
+                        </div>
+                        <button type="button" class="btn btn-primary disabled pull-right">Next</button>
+                    </div>
+                </div>
+                  
+          </div>
+        </div> <!-- /container -->
+      </div>
+{% include 'footer.html' %}
+{% endblock content %}
+

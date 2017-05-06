@@ -1,0 +1,124 @@
+import os
+import re
+import shutil
+from subprocess import Popen, PIPE
+
+ca_conf = "/home/aghadge/ssl/ca/sub-ca/sub-ca.conf"
+password = "amitg.b91"
+crt_command = "openssl ca -config {} -days {} -in {}.csr -out {}.crt -passin pass:{} -batch -extensions server_ext"
+
+
+def set_workspace(workspace):
+    if os.path.isdir(workspace):
+        try:
+            shutil.rmtree(workspace)
+            os.mkdir(workspace)
+        except:
+            print("Error occured while deleting workspace: {}".format(workspace))
+    else:
+        os.mkdir(workspace)
+    os.chdir(workspace)
+
+def safeRemove(user_csr):
+    if os.path.isfile(user_csr):
+        os.remove(user_csr)
+
+def create_csr_file(csr_text, user_csr):
+    csr_file = "{}.csr".format(user_csr)
+    safeRemove(csr_file)
+    if csr_text:
+        with open(csr_file, "w") as csr_write:
+            csr_write.write(csr_text)
+    data = read_csr_file(user_csr)
+    if data:
+        #safeRemove(csr_file)
+        return data, user_csr
+    else:
+        return False
+
+def scan_data(data):
+    subject = ""
+    public_key = ""
+    datas = data.split()
+    key = datas[datas.index("Public-Key:")+1].replace("'", "")
+    key = re.search("\d+", key)
+    public_key = None
+    if key:
+        public_key = key.group()
+    data = {}
+    for subs in datas:
+        sub = subs.split("=")
+        if sub[0].upper()=="C":
+            data["Country"]=sub[-1]
+        if sub[0].upper()=="ST":
+            data["State"]=sub[-1]
+        if sub[0].upper()=="L":
+            data["City"]=sub[-1]
+        if sub[0].upper()=="O":
+            data["Organisation"]=sub[-1]
+        if sub[0].upper()=="CN":
+            data["Comman_Name"]=sub[-1]
+    return data, public_key
+
+def scan_datas(datas):
+    subject = ""
+    public_key = ""
+    data = {}
+    version = 0
+    public_key = None
+    for subs in datas.split("\n"):
+        if re.match("Version:", subs.lstrip()):
+            version = subs.split()[1]
+        if re.search("Public-Key:", subs):
+            key = re.search("\d+", subs)
+            if key:
+                public_key = key.group()
+        if re.search("Subject:", subs):
+            for subj in subs.split():
+                sub = subj.replace(",","").split("=")
+                if sub[0].upper()=="C":
+                    data["Country"]=sub[-1]
+                if sub[0].upper()=="ST":
+                    data["State"]=sub[-1]
+                if sub[0].upper()=="L":
+                    data["City"]=sub[-1]
+                if sub[0].upper()=="O":
+                    data["Organisation"]=sub[-1]
+                if sub[0].upper()=="CN":
+                    data["Comman Name"]=sub[-1]
+    return data, public_key, version
+    
+def read_csr_file(user_csr):
+    cmds = "openssl req -noout -text -in {0}.csr".format(user_csr)
+    ps = Popen(cmds, stdout=PIPE, stderr=PIPE, shell=True)
+    status = ps.wait()
+    output = ps.communicate()
+    csr_data = []
+    if status == 0:
+        csr_data = output[0]
+    return scan_datas(csr_data)
+
+def generates_certificate(csr_file, year):
+    cmds = crt_command.format(ca_conf, year*365, csr_file, csr_file, password)
+    print("Command: {}".format(cmds))
+    ps = Popen(cmds,  shell=True)
+    status = ps.wait()
+    output = ps.communicate()
+    if status == 0:
+        return True
+    else:
+        print(output[-1])
+    return False
+
+def read_certificate(cert_file):
+    cert_file = cert_file.path
+    cmds = "openssl x509 -text -noout -in {}".format(cert_file)
+    ps = Popen(cmds, stdout=PIPE, stderr=PIPE, shell=True)
+    status = ps.wait()
+    output = ps.communicate()
+    if status != 0:
+        print(output[-1])
+        return False
+    details = {}
+    return scan_datas(output[0]), output[0]
+    

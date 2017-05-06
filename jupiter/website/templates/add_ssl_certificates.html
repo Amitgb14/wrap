@@ -1,0 +1,97 @@
+  
+{% block content %}
+{% include 'header.html' %}
+{% load crispy_forms_tags %}
+    <div id="wrapper">
+        <div class="container">
+          <!-- Main component for a primary marketing message or call to action -->
+          <!-- Page Heading -->
+          <div class="container-fluid">
+            <div class="alert alert-danger" role="alert" id="plan_slections">
+              <strong>Error!</strong> Change a few things up and try submitting again.
+            </div>
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-10 col-md-6">
+                     <ol class="breadcrumb">
+                          <li><a href="/products/">Products</a></li>
+                          <li><a href="/products/add_products/">Add Products</a></li>
+                          <li>New SSL Certificates</li>
+                     </ol>
+                  </div>
+              </div>
+
+                          <!-- /.row -->
+                
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-md-offset-2">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary" id="choose_plan_button">Choose Plan</button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="add_chkout_button">Checkout</button>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="finished_button">Finished</button>
+                          </div>
+                      </div>
+                    </div>
+                </div><br>
+                
+                <div class="row">
+                    <div class="col-lg-6 col-md-3 col-md-offset-2" id="choose_plan">
+                      
+                      <ul class="list-group">
+                        
+                        {% for certificate in certificates %} 
+                            <li class="list-group-item">
+                                <div class="radio radio-primary">
+                                    <input name="dur_radio" id="dur_radio" value="{{certificate.id}}" type="radio"
+                                    data-last-value="{{certificate.id}}" data-options='{"plan":"{{certificate}}"}'>
+                                    <label for="value_{{ forloop.counter }}">
+                                        {{ certificate.certificate }} - ({{certificate.duration}} Year - {{certificate.cost}}$)
+                                    </label>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                      </ul>
+                        <center>
+                          <button type="submit" class="btn btn-primary btn-lg" id="choose_plan_click">Next</button>
+                        </center>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-3 col-md-offset-2" id="add_checkout">
+                        <div class="alert alert-info" role="alert">
+                            Plan: <span id="plan_details"></span>
+                        </div>
+                        <div class="alert alert-success" role="alert" id="payment_mode">
+                            Payment Mode: 
+                        </div>
+                        
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-primary" id="back_add_ssl">Back</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-primary" id="checkout_button">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Finished section -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-3 col-md-offset-2" id="finished">
+                        <div class="alert alert-info" role="alert" id="results">
+                        </div>
+                        <button type="button" class="btn btn-primary disabled pull-right">Next</button>
+                    </div>
+                </div>
+                <!-- End Finished Section -->
+                
+          </div>
+        </div> <!-- /container -->
+      </div>
+{% include 'footer.html' %}
+{% endblock content %}
+

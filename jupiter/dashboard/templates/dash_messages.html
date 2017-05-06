@@ -1,0 +1,28 @@
+
+{% load custom_tags %}
+
+  <div id="messages_" class="col-sm-10 tab_display">
+      <br><button type="button" class="btn btn-primary">New</button>
+      <br><br>
+      <!-- /.row -->
+      <div class="row" id="messages">
+				<div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Today</div>
+								<div class="list-group">
+								    {% for msg in messages %}
+								      {% if msg.read_status %}
+										    <a href="#" class="list-group-item">
+									    {% else %}
+									        <a href="#" class="list-group-item active">
+									  {% endif %}
+												<p class="list-group-item-text">{{ msg.messages }}</p>
+										</a>
+									{% endfor %}
+								</div>
+						</div>
+					</div>
+				</div>
+
+
+</div>

@@ -1,0 +1,71 @@
+
+{% block content %}
+
+{% include 'header_no_nav.html' %}
+{% load crispy_forms_tags %}
+
+
+  <body>
+
+    <!-- Login Dialog -->
+
+
+    <br><br><br>
+    <div class="container">
+	<p></p>
+	<div class="row">
+  		<div class="col-md-4"></div><!-- column width-->
+  		<div class="col-md-4">
+  		  <ul class="nav nav-tabs" role="tablist">
+  		    <li role="presentation" class="active">
+  		        <a href="#log-in" aria-controls="log-in" role="tab" data-toggle="tab">Log In</a>
+  		    </li>
+  		    <li role="presentation">
+  		        <a href="#sign-up" aria-controls="sign-up" role="tab" data-toggle="tab">Sign-Up</a>
+  		    </li>
+  		  </ul>
+  		  
+  		  <!-- Tab panes -->
+          <div class="tab-content">
+  		  <div role="tabpanel" class="tab-pane active" id="log-in">
+			<div class="panel panel-default">
+			  <div class="panel-body">
+			    <div class="page-header">
+  				    <h1><small>Please sign in</small></h1>
+			    </div>
+
+				
+				
+				<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+
+				  {{ form|crispy }}
+				
+				  <div class="checkbox">
+			          <label>
+			              <input value="remember-me" type="checkbox"> Remember me
+			          </label>
+			          <label class="pull-right">
+    			          <a href="">Forgot your password?</a>
+    			      </label>
+
+			      </div>
+                  <br>
+                  <center>
+    				  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-lockx"></span>Login</button>
+                      <hr>
+                  </center>
+				</form>
+			  </div>
+			</div>
+			<! ---- End Panel---->
+			</div>
+		</div>
+		</div>
+	</div>
+  
+    </div>
+
+{% include 'footer.html' %}
+
+{% endblock content %}

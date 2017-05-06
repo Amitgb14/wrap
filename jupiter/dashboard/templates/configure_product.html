@@ -1,0 +1,48 @@
+
+{% load custom_tags %}
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="product_title"></h4>
+      </div>
+      <div class="modal-body form-box">
+      <form role="form" class="f1" method="POST" id="product_csr">{% csrf_token %}
+        <div class="f1-steps">
+          <div class="f1-progress">
+            <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;">
+            </div>
+          </div>
+          <div class="f1-step active">
+            <div class="f1-step-icon"><i class="fa fa-tasks"></i>
+            </div>
+            <p>CSR</p>
+          </div>
+          <div class="f1-step">
+            <div class="f1-step-icon"><i class="fa fa-credit-card"></i>
+            </div>
+            <p>Verification</p>
+          </div>
+          <div class="f1-step">
+            <div class="f1-step-icon"><i class="fa fa-check"></i>
+            </div>
+            <p>Status</p>
+          </div>
+        </div>
+
+        <fieldset>
+          <div class="form-group">
+            <textarea name="CSR_text" class="form-control" id="CSR_text" rows="3"></textarea>
+          </div>
+          <div class="f1-buttons">
+            <button type="button submit" class="btn btn-submit">Submit</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <button type="button" class="btn-next">Verification</button>
+        </fieldset>
+      </form>
+      </div>
+    </div>
+  </div>

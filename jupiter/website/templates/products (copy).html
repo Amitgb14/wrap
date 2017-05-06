@@ -1,0 +1,78 @@
+
+
+{% block content %}
+{% include 'header.html' %}
+{% load custom_tags %}
+
+
+    <div id="wrapper">
+        <div class="container">
+          <!-- Main component for a primary marketing message or call to action -->
+          <!-- Page Heading -->
+          <div class="container-fluid">
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-10 col-md-6">
+                     <ol class="breadcrumb">
+                          <li><a href="/products/">Products</a></li>
+                     </ol>
+                  </div>
+              </div>
+              <div class="row">
+                    <div class="col-lg-10">
+                        <a href="/products/add_products/" class="btn btn-primary pull-right" role="button">+ Add Product</a>
+                    </div>
+              </div><br>
+                          <!-- /.row -->
+                <div class="row">
+                {% for product in products %}
+                
+                    <div class="col-lg-5 col-md-5">
+                        {% if product.activate %} 
+                          <div class="panel panel-green">
+                        {% else %}
+                          <div class="panel panel-primary">
+                        {% endif %}
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-lg-10 text-left">
+                                        <span>ID: {{product.certificate_number}}</span>
+                                        <h3>{{product.certificate}}</h3>
+                                        <span>Created: {{product.created_date}}</span><br>
+                                        <span>Duration: {{product.certificate.duration}} Year</span><br>
+                                        {% if product.activate %} 
+                                              <span>Expired on: {{product.info}}</span>
+                                        {% else %}
+                                              <span>Active: {{product.activate|change}}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if product.activate %} 
+                                <a href="/products/view_certificates/{{product.id}}/">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a href="/products/activate_certificates/{{product.id}}/">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Configure</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                
+                {% endfor %}
+                </div>
+          </div>          <!-- /.row -->
+        </div> <!-- /container -->
+      </div>
+{% include 'footer.html' %}
+{% endblock content %}
+

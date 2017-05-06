@@ -1,0 +1,5 @@
+{
+  "read" : "openssl x509 -text -noout -in ",
+  "create" : "openssl ca -config %s -days %d*365 -in %s.csr -out %s.crt -passin pass:%s -batch -extensions server_ext",
+  "createe" : "openssl ca -config {ca_conf} -days ${duration*365} -in ${csr_file}.csr -out {csr_file}.crt -passin pass:{password} -batch -extensions server_ext"
+}

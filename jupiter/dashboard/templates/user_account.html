@@ -1,0 +1,92 @@
+
+{% load custom_tags %}
+
+  <div id="profile_" class="col-sm-10 tab_display">
+    <span class="pull-right notify">
+      <i class="fa fa-bell" aria-hidden="true"></i>&nbsp;
+      <i class="fa fa-gear" aria-hidden="true"></i>&nbsp;
+      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+    </span>
+    <h5>Customer ID: #{{user.id}}</h5><br>
+    <h4>Welcome {{user.first_name}} {{user.last_name}}</h4><br>
+    <div class="profile-nav">
+      <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li class="active showOption_" target="active_services_"><a href="#">My Services</a></li>
+        <li class="showOption_" target="setting_"><a href="#">Settings</a></li>
+      </ul>
+      </nav>
+    </div>
+
+
+    <div id="active_services_" class="display">
+
+      {% if active_services %}
+      <div class="panel-body">
+        {% for service in active_services %}
+          <div class="col-lg-6 col-md-6 products-blocks">
+            {% if service.activate %}
+              <div class="panel panel-green">
+            {% else %}
+              <div class="panel panel-primary">
+            {% endif %}
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-lg-10 text-left">
+                      <span>ID: {{service.certificate_number}}</span>
+                      <h3 id="certificate_title_{{service.id}}">{{service.certificate}}</h3>
+                      <span>Created: {{service.created_date}}</span><br>
+                      <span>Duration:
+                        <span id="certificate_duration_{{service.id}}">{{service.certificate.duration}}</span> Year
+                      </span><br>
+                      {% if service.activate %}
+                        <span>Expired on: {{service.info}}</span>
+                      {% else %}
+                        <span>Active: {{service.activate|change}}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
+                {% if service.activate %}
+                  <a href="" data-toggle="modal" data-target="#view_product" data-product-id="{{service.id}}">
+                    <div class="panel-footer">
+                      <span class="pull-left">View Details</span>
+                      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                      <div class="clearfix"></div>
+                    </div>
+                  </a>
+                {% else %}
+                  <a href="" data-toggle="modal" data-target="#configure_product" data-product-id="{{service.id}}">
+                    <div class="panel-footer">
+                      <span class="pull-left">Configure</span>
+                      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                      <div class="clearfix"></div>
+                    </div>
+                  </a>
+                {% endif %}
+          </div>
+        </div>
+       {% endfor %}
+      </div>
+      {% else %}
+      <div>
+        <center><h3>No active service</h3></center>
+      </div>
+      {% endif %}
+
+      <div class="modal fade" id="view_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        {% include 'view_product.html' %}
+      </div>
+
+      <div class="modal fade" id="configure_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        {% include 'configure_product.html' %}
+      </div>
+    </div>
+    
+
+    <div id="setting_" class="display">
+        Here is Setting
+    </div>
+
+  </div>

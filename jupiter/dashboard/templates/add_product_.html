@@ -1,0 +1,102 @@
+
+{% load custom_tags %}
+
+
+<!-- Modal -->
+
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">Certificate Singing Request(CSR)</h4>
+                                </div>            
+                
+                                <div class="modal-body form-box">
+										<form role="form" action="" method="post" class="f1" id="new_ssl_product">
+										    {% csrf_token %}
+
+                                		<h3>Catch Your Certificate</h3>
+                                		<p>Fill in the form to get instant cert</p>
+                                		<div class="f1-steps">
+                                			<div class="f1-progress">
+                                			    <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
+                                			</div>
+                                			<div class="f1-step active">
+                                				<div class="f1-step-icon"><i class="fa fa-tasks"></i></div>
+                                				<p>plan</p>
+                                			</div>
+                                			<div class="f1-step">
+                                				<div class="f1-step-icon"><i class="fa fa-credit-card"></i></div>
+                                				<p>details</p>
+                                			</div>
+                                		    <div class="f1-step">
+                                				<div class="f1-step-icon"><i class="fa fa-check"></i></div>
+                                				<p>finished</p>
+                                			</div>
+                                		</div>
+                                		
+                                		
+                                		<fieldset>
+                                		    <h4>Choose right plan:</h4>
+                                		    {% for certificate in certificates_dur %}
+                                			    <div class="form-check">
+                                                    <label for="value_{{ forloop.counter }}" class="form-check-label"">
+                                                        <input name="dur_radio" id="dur_radio" value="{{certificate.id}}" type="radio"
+                                                            data-last-value="{{certificate.id}}" data-options='{"plan":"{{certificate}}"}'> 
+                                                        {{ certificate.certificate }} - ({{certificate.duration}} Year - {{certificate.cost}}$)
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                            
+                                            <div class="f1-buttons">
+                                                <button type="button" class="btn btn-next">Next</button>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <h4>CSR option:</h4>
+											<div class="form-group">
+												<label class="sr-onlys" for="f1-file">Upload CSR file</label>
+												<input type="file" name="f1-file" placeholder="Email..." id="f1-file">
+												<center><h4>OR</h4></center>
+												<label class="sr-onlys" for="f1-textarea">Copy paste CSR</label>
+												<textarea class="form-control" rows="3"></textarea>
+											</div>
+											<div class="f1-buttons">
+													<button type="button" class="btn btn-previous">Previous</button>
+													<button type="submit" class="btn btn-next">Next</button>
+											</div>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <h4>Social media profiles:</h4>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="f1-facebook">Facebook</label>
+                                                <input type="text" name="f1-facebook" placeholder="Facebook..." class="f1-facebook form-control" id="f1-facebook">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="f1-twitter">Twitter</label>
+                                                <input type="text" name="f1-twitter" placeholder="Twitter..." class="f1-twitter form-control" id="f1-twitter">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="f1-google-plus">Google plus</label>
+                                                <input type="text" name="f1-google-plus" placeholder="Google plus..." class="f1-google-plus form-control" id="f1-google-plus">
+                                            </div>
+                                            <div class="f1-buttons">
+                                                <button type="button" class="btn btn-previous">Previous</button>
+                                                <button type="submit" class="btn btn-submit">Submit</button>
+                                            </div>
+                                        </fieldset>
+                                        
+                                	</form>
+                                </div>
+                                
+                                
+                                <div class="modal-footer">
+                                </div>
+                              </div>
+                            </div>
+                
+
+
+

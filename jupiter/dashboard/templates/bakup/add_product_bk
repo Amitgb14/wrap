@@ -1,0 +1,94 @@
+
+{% block content %}
+{% include 'dash_header.html' %}
+{% load static %}
+{% load custom_tags %}
+
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+                    	<form role="form" action="" method="post" class="f1">
+
+                    		<h3>Catch Your Certificate</h3>
+                    		<p>Fill in the form to get instant cert</p>
+                    		<div class="f1-steps">
+                    			<div class="f1-progress">
+                    			    <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
+                    			</div>
+                    			<div class="f1-step active">
+                    				<div class="f1-step-icon"><i class="fa fa-tasks"></i></div>
+                    				<p>plan</p>
+                    			</div>
+                    			<div class="f1-step">
+                    				<div class="f1-step-icon"><i class="fa fa-credit-card"></i></div>
+                    				<p>details</p>
+                    			</div>
+                    		    <div class="f1-step">
+                    				<div class="f1-step-icon"><i class="fa fa-check"></i></div>
+                    				<p>finished</p>
+                    			</div>
+                    		</div>
+                    		
+                    		<fieldset>
+                    		    <h4>Choose right plan:</h4>
+                    		    {% for certificate in certificates %}
+                    			    <div class="form-check">
+                                        <label for="value_{{ forloop.counter }}" class="form-check-label"">
+                                            <input name="dur_radio" id="dur_radio" value="{{certificate.id}}" type="radio"
+                                                data-last-value="{{certificate.id}}" data-options='{"plan":"{{certificate}}"}'> 
+                                            {{ certificate.certificate }} - ({{certificate.duration}} Year - {{certificate.cost}}$)
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-next">Next</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <h4>Payment option:</h4>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-email">Email</label>
+                                    <input type="text" name="f1-email" placeholder="Email..." class="f1-email form-control" id="f1-email">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-password">Password</label>
+                                    <input type="password" name="f1-password" placeholder="Password..." class="f1-password form-control" id="f1-password">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-repeat-password">Repeat password</label>
+                                    <input type="password" name="f1-repeat-password" placeholder="Repeat password..." 
+                                                        class="f1-repeat-password form-control" id="f1-repeat-password">
+                                </div>
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-previous">Previous</button>
+                                    <button type="button" class="btn btn-next">Next</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <h4>Social media profiles:</h4>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-facebook">Facebook</label>
+                                    <input type="text" name="f1-facebook" placeholder="Facebook..." class="f1-facebook form-control" id="f1-facebook">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-twitter">Twitter</label>
+                                    <input type="text" name="f1-twitter" placeholder="Twitter..." class="f1-twitter form-control" id="f1-twitter">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-google-plus">Google plus</label>
+                                    <input type="text" name="f1-google-plus" placeholder="Google plus..." class="f1-google-plus form-control" id="f1-google-plus">
+                                </div>
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-previous">Previous</button>
+                                    <button type="submit" class="btn btn-submit">Submit</button>
+                                </div>
+                            </fieldset>
+                    	
+                    	</form>
+                    </div>
+                </div>                    
+
+{% include 'dash_footer.html' %}
+{% endblock content %}

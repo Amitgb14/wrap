@@ -1,0 +1,35 @@
+
+{% load custom_tags %}
+
+
+<!-- Modal -->
+
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">Select SSL Certificate Plan</h4>
+                                </div>
+
+                                <div class="modal-body form-box">
+										<form role="form" class="f1" id="new_ssl_product">{% csrf_token %}
+                                		<h3>Catch Your Plan</h3>
+
+                                		    {% for certificate in certificates_dur %}
+                                			    <div class="form-check">
+                                                    <label for="value_{{ forloop.counter }}" class="form-check-label"">
+                                                        <input name="dur_radio" id="dur_radio" value="{{certificate.id}}" type="radio"
+                                                            data-last-value="{{certificate.id}}" data-options='{"plan":"{{certificate}}"}'>
+                                                        {{ certificate.certificate }} - ({{certificate.duration}} Year - {{certificate.cost}}$)
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+
+                                            <div class="f1-buttons">
+                                                <button type="submit" class="btn btn-submit" data-dismiss="modal">Create</button>
+                                            </div>
+                                	    </form>
+                                </div>
+
+                              </div>
+                            </div>
