@@ -3,6 +3,8 @@ import os
 import shutil
 import requests
 
+from django.contrib.staticfiles.storage import staticfiles_storage
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -20,8 +22,6 @@ from certificate.models import UserCertificate, UserActivateCertificate
 from certificate.models import Certificate, CertificateDuration
 
 from client.models import Message, Status
-
-certificate_url = "http://localhost:1337/api/get/"
 
 def count_days(expired_date):
     day = expired_date - timezone.now()
@@ -73,18 +73,18 @@ def add_product(request):
     status = ""
     if request.method == 'POST':
         plan = request.POST['plan']
-
         certificates_dur = CertificateDuration.objects.get(pk=plan)
-        # new_certificate = UserCertificate.objects.create(client=request.user,
-        #            certificate=certificates_dur
-        # )
-        status_messages = "Certificate "+str(certificates_dur)+" was added in your account"
-        #status = user_status(request.user, status_messages)
+        new_certificate = UserCertificate.objects.create(client=request.user,
+                    certificate=certificates_dur
+        )
+        status_messages = "Certificate "+str(certificates_dur)+" added in your account."
+        status = user_status(request.user, status_messages)
 
     return HttpResponse(status)
 
 def get_product(request):
     resp_ = {"status" : 404, "output" : ""}
+    certificate_url = "http://localhost:1337/api/get/"
     if request.method == 'GET':
         id = request.GET['id']
         url = certificate_url+id
@@ -92,11 +92,20 @@ def get_product(request):
     return HttpResponse(resp.replace("\n", "<br>"))
 
 def add_product_csr(request):
-    print(request.method)
+    resp = {"status" : 404, "output" : ""}
+    certificate_url = "http://localhost:1337/api/create/"
     if request.method == 'POST':
         csr_text = request.POST['csr_text']
         product_id = request.POST['product_id']
         duration = request.POST['duration']
-        print(product_id, duration, csr_text)
+        data = {'csr_text' : csr_text, 'id' : product_id, 'duration' : duration}
+        resp = requests.post(certificate_url, data).json()
+        # gen_cert_file = "{}_certificate_{}.crt".format(product_id, duration)
+        # cert_url = staticfiles_storage.url(gen_cert_file)
+        # with open(cert_url, "w") as fwrite:
+        #     fwrite.write(resp["output"])
 
-    return HttpResponse("")
+        certificates_dur = UserCertificate.objects.get(pk=product_id).certificate
+        status_messages = "Certificate "+str(certificates_dur)+" is activated."
+        status = user_status(request.user, status_messages)
+    return HttpResponse(resp['status'])

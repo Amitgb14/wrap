@@ -175,6 +175,8 @@ $(document).on('submit', '#new_ssl_product', function(e){
             var msg = "Added certificate";
         },
     });
+		$('#ssl_product_1').modal('hide');
+		window.location.href = '/dashboard/';
 });
 
 

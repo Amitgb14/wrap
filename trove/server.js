@@ -24,7 +24,7 @@ router.get('/get/:id', function(request, response){
 
 router.post('/create', function(request, response){
   var result = command.create(request.body.csr_text, request.body.id, request.body.duration);
-  response.end(result);
+  response.send(result);
 });
 
 app.use('/api', router);

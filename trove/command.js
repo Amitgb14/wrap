@@ -40,14 +40,18 @@ exports.read = function(id, callback) {
 
 exports.create = function(csr_text, id, duration, callback) {
     var v = command["create"];
-    var csr_file = "csr_file";
+    var csr_file = "csr_file_"+id;
+    var result;
     fs.writeFileSync(csr_file+".csr", csr_text, 'utf8');
 
     var cmd = util.format(command["create"], ca_conf, duration, csr_file, csr_file, password);
-    console.log(cmd);
     var output = exec.exec(cmd);
-
-    var result = {"status": output.code, "output": output.stdout};
-
-    console.log(result);
+    var status = output.code;
+    if(output.code == 0 ) {
+        result = {"status": output.code, "output": output.stdout};
+    }
+    else {
+      result = {"status": output.code, "output": output.sterr};
+    }
+    return result
 }
