@@ -69,6 +69,7 @@ def logout_view(request):
     logout(request)
     return redirect("/")
 
+@login_required(login_url="/login/")
 def add_product(request):
     status = ""
     if request.method == 'POST':
@@ -82,18 +83,20 @@ def add_product(request):
 
     return HttpResponse(status)
 
+@login_required(login_url="/login/")
 def get_product(request):
     resp_ = {"status" : 404, "output" : ""}
-    certificate_url = "http://localhost:1337/api/get/"
+    certificate_url = "http://localhost:1337/api/v1/get/"
     if request.method == 'GET':
         id = request.GET['id']
         url = certificate_url+id
         resp = requests.get(url).text
     return HttpResponse(resp.replace("\n", "<br>"))
 
+@login_required(login_url="/login/")
 def add_product_csr(request):
     resp = {"status" : 404, "output" : ""}
-    certificate_url = "http://localhost:1337/api/create/"
+    certificate_url = "http://localhost:1337/api/v1/create/"
     if request.method == 'POST':
         csr_text = request.POST['csr_text']
         product_id = request.POST['product_id']
@@ -109,3 +112,4 @@ def add_product_csr(request):
         status_messages = "Certificate "+str(certificates_dur)+" is activated."
         status = user_status(request.user, status_messages)
     return HttpResponse(resp['status'])
+

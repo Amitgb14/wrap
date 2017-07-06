@@ -14,7 +14,7 @@
       <nav class="navbar navbar-default">
       <ul class="nav navbar-nav">
         <li class="active showOption_" target="active_services_"><a href="#">My Services</a></li>
-        <li class="showOption_" target="setting_"><a href="#">Settings</a></li>
+        <li class="showOption_" target="setting_"><a href="#">Profile</a></li>
       </ul>
       </nav>
     </div>
@@ -87,7 +87,46 @@
 
 
     <div id="setting_" class="display">
-        Here is Setting
+      <br>
+      <div class="col-lg-10 col-md-10 products-blocks">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Personal Details</h3>
+          </div>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-6">
+                  {{user.first_name}} {{user.last_name}}
+                  <small class="label label-primary">Change</small>
+              </div>
+              <div class="col-xs-6">
+                  Personal email: <br>{{user.first_name}} {{user.last_name}}
+                  <small class="label label-primary">Change</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <br>
+              <div class="col-xs-6">
+                  Work Phone: <br>+91 7276432756
+                  <small class="label label-primary">Change</small>
+              </div>
+              <div class="col-xs-2">
+                  Address: <br>242, 1/2 SRPF Gr-2
+                                Pune
+                                Pune, MH 411022
+                                India
+                  <small class="label label-primary">Change</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
+
+
 
   </div>

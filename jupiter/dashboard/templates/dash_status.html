@@ -2,7 +2,7 @@
 {% load custom_tags %}
 
   <div id="ustatus_" class="col-sm-10 tab_display">
-      <h3><span class="label label-default">History</span></h3>
+      <h3><span class="label label-default">Order History</span></h3>
       <hr>
       <br>
       <!-- /.row -->
@@ -10,9 +10,9 @@
 					<div class="col-sm-6">
 								<div class="list-group">
 								    {% for sts in status %}
-										    <a href="#" class="list-group-item">
-											<small class="pull-left">{{ sts.date|time:"H:i"}}&nbsp;&nbsp;&nbsp;</small>
-											<p class="list-group-item-text text-left">{{ sts.status_messages }}</p>
+									   <a href="#" class="list-group-item">
+											   <small class="pull-left">{{ sts.date|time:"H:i"}}&nbsp;&nbsp;&nbsp;</small>
+											   <p class="list-group-item-text text-left">{{ sts.status_messages }}</p>
 										</a>
 									{% endfor %}
 								</div>
